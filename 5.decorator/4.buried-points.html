@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>埋点</title>
+</head>
+<body>
+  <button data-name="wetermelon" id="wetermelon">西瓜</button>
+  <button data-name="apple" id="apple">苹果</button>
+  <script>
+    let wetermelon = document.getElementById('wetermelon');
+    let apple = document.getElementById('apple');
+
+    // 添加切面
+    Function.prototype.after = function (afterFn) {
+      let _this = this;
+      return function () {
+        _this.apply(this, arguments);
+        afterFn.apply(this, arguments);
+      }
+    }
+
+    function click() {
+      console.log(`你点击了${this.dataset.name}`);
+    }
+
+    click = click.after(function () {
+      // 向服务器发送统计数据
+      let img = new Image();
+      img.src = `http://localhost:3000/report?name=${this.dataset.name}`;
+    });
+
+    // 给所有的
+    Array.from(document.querySelectorAll('button')).forEach(button => {
+      button.addEventListener('click', click);
+    });
+  </script>
+</body>
+</html>

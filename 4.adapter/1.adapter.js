@@ -22,7 +22,7 @@ class Notepad {
     this.adaptor = new Adaptor(Power);
   }
   use() {
-    console.log(this.adaptor.charge());
+    console.log(this.adaptor.chargeTransform());
   }
 }
 
