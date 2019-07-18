@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>防抖代理</title>
+</head>
+<body>
+  <input type="text" id="ipt">
+
+  <script>
+    let ipt = document.getElementById('ipt');
+    function post() {
+      console.log('发送请求了');
+    }
+
+    const debouncePost = (function () {
+      let timer = null;
+      return function () {
+        clearInterval(timer);
+        timer = setTimeout(function () {
+          post();
+        }, 500);
+      }
+    })();
+
+    ipt.addEventListener('input', function () {
+      debouncePost();
+    });
+  </script>
+</body>
+</html>

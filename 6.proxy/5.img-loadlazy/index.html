@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>图片懒加载</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <ul id="menu">
+    <li data-src="/img/bg1.jpg">图片1</li>
+    <li data-src="/img/bg2.jpg">图片2</li>
+  </ul>
+  <div id="bgimg"></div>
+  <script>
+    let menu = document.getElementById('menu');
+    let bgimg = document.getElementById('bgimg');
+
+    let background = (function () {
+      let img = new Image();
+      bgimg.appendChild(img)
+      return {
+        setSrc(src) {
+          img.src = src;
+        }
+      }
+    })();
+
+    let proxyBackground = (function () {
+      let img = new Image();
+      img.onload = function () {
+        background.setSrc(this.src);
+      }
+      return {
+        setSrc(src) {
+          background.setSrc('./img/loading.gif');
+          img.src = src;
+        }
+      }
+    })();
+
+    menu.addEventListener('click', function (event) {
+      let src = event.target.dataset.src;
+
+      // 防止缓存
+      proxyBackground.setSrc(`${src}?time=${Date.now()}`);
+    });
+  </script>
+</body>
+</html>
