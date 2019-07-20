@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>事件监听</title>
+</head>
+<body>
+  <button id="btn">click</button>
+  <script>
+    let btn = document.getElementById('btn');
+    btn.addEventListener('click', () => console.log(1));
+    btn.addEventListener('click', () => console.log(2));
+    btn.addEventListener('click', () => console.log(3));
+  </script>
+</body>
+</html>

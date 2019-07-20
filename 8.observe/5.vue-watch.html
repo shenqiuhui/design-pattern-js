@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue 监听</title>
+</head>
+<body>
+  <div id="root">
+    <p>FullName: {{fullName}}</p>
+    <p>
+      FirstName:
+      <input type="text" v-model="firstName" />
+    </p>
+    <p>
+      LastName:
+      <input type="text" v-model="lastName" />
+    </p>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script>
+    new Vue({
+      el: '#root',
+      data: {
+        firstName: '张',
+        lastName: '三',
+        fullName: '张三'
+      },
+      watch: {
+        firstName(newName, oldName) {
+          this.fullName = `${newName}${this.lastName}`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
