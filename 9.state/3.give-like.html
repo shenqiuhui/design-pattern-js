@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>点赞</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    let likeState = {
+      render(element) {
+        element.innerHTML = '赞';
+      }
+    };
+
+    let likedState = {
+      render(element) {
+        element.innerHTML = '取消'
+      }
+    }
+
+    class Button {
+      constructor(container) {
+        this.liked = false; // 默认为未点赞状态
+        this.state = likeState; // 设置当前的状态为未点赞
+
+        this.element = document.createElement('button');
+        container.appendChild(this.element);
+        this.render(); // 初始化渲染
+      }
+      setState(state) {
+        this.state = state; // 修改渲染状态
+        button.liked = !button.liked; // 修改状态属性
+        this.render(); // 重新渲染
+      }
+      render() {
+        this.state.render(this.element);
+      }
+    }
+
+    let button = new Button(document.getElementById('root'));
+
+    button.element.addEventListener('click', () => {
+      button.setState(button.liked ? likeState : likedState);
+    });
+  </script>
+</body>
+</html>

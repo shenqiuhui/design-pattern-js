@@ -8,4 +8,5 @@
 - [装饰器模式](https://www.overtaking.top/2018/09/28/20180928030105/)
 - [代理模式](https://www.overtaking.top/2018/09/29/20180929025641/)
 - [外观模式](https://www.overtaking.top/2018/10/01/20181001165125/)
-- [观察者模式](https://www.overtaking.top/2018/10/04/20181004114907/)
+- [发布/订阅和观察者模式](https://www.overtaking.top/2018/10/04/20181004114907/)
+- [状态模式](https://www.overtaking.top/2018/10/05/20181005161213/)
