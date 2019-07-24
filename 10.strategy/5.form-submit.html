@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>表单校验</title>
+</head>
+<body>
+  <form id="userform">
+    用户名：<input type="text" name="username">
+    密码：<input type="text" name="password">
+    手机号：<input type="text" name="mobile">
+    <input type="submit" value="提交">
+  </form>
+  <script>
+    const form = document.getElementById('userform');
+    const validator = (function () {
+      const rules = {
+        noEmpty(val, msg) {
+          if (val === '') return msg;
+        },
+        minLength(val, min, msg){
+          if (val === '' || val.length < min) return msg;
+        },
+        isMobile(val, msg) {
+          if (!/1\d{10}/.test(val)) return msg;
+        }
+      };
+
+      // 存储
+      const checks = [];
+
+      // 增加校验的项目
+      function add(element, rule) {
+        checks.push(function () {
+          // ['minLength', 6, '密码长度不能少于 6 位']
+          let name = rule.shift();
+
+          // [val, 6, '密码长度不能少于 6 位']
+          rule.unshift(element.value);
+          return rules[name] && rules[name].apply(element, rule);
+        });
+      }
+
+      // 给策略对象增加新的功能
+      function addRule(name, rule){
+        rules[name] = rule;
+      }
+
+      // 开始校验
+      function start() {
+        for (let i = 0; i < checks.length; i++) {
+          let msg = checks[i]();
+          if (msg) return msg;
+        }
+      }
+
+      return { add, addRule, start };
+    })();
+
+    // 添加自定义规则
+    validator.addRule('maxLength', function (val, max, msg) {
+      if (val === '' || val.length > max) return msg;
+    });
+
+    form.onsubmit = function () {
+      validator.add(form.username, ['noEmpty', '用户名不能为空']);
+      validator.add(form.password, ['minLength', 6, '密码长度不能少于 6 位']);
+      validator.add(form.password, ['maxLength', 12, '密码长度不能大于 12 位']);
+      validator.add(form.mobile, ['isMobile', '必须输入合法的手机号']);
+
+      let msg = validator.start();
+      alert(msg || '校验通过');
+      return !msg;
+    }
+  </script>
+</body>
+</html>
